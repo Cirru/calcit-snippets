@@ -2,7 +2,8 @@
 (ns app.twig.container
   (:require [recollect.macros :refer [deftwig]]
             [app.twig.user :refer [twig-user]]
-            ["randomcolor" :as color]))
+            ["randomcolor" :as color]
+            [app.config :as config]))
 
 (deftwig
  twig-members
@@ -25,7 +26,7 @@
                 router
                 :data
                 (case (:name router)
-                  :home (:pages db)
+                  :home {}
                   :profile (twig-members (:sessions db) (:users db))
                   {})),
        :count (count (:sessions db)),
