@@ -22,6 +22,7 @@
   "author": "jiyinyiyong",
   "license": "MIT",
   "dependencies": {
+    "copy-text-to-clipboard": "^1.0.4",
     "md5": "^2.2.1",
     "randomcolor": "^0.5.3",
     "shortid": "^2.2.13",
