@@ -14,6 +14,6 @@
    :router {:name :home, :data nil, :router nil},
    :messages {}})
 
-(def snippet {:id nil, :text "", :frequency 0, :time 0})
+(def snippet {:id nil, :text nil, :frequency 0, :time 0, :name "", :description ""})
 
 (def user {:name nil, :id nil, :nickname nil, :avatar nil, :password nil})
