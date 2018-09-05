@@ -6,7 +6,8 @@
             [respo.macros :refer [defcomp <> cursor-> action-> span div]]
             [app.config :as config]
             [respo-alerts.comp.alerts :refer [comp-prompt]]
-            [respo-ui.comp.icon :refer [comp-icon]]))
+            [respo-ui.comp.icon :refer [comp-icon]]
+            [cljs.reader :refer [read-string]]))
 
 (defcomp
  comp-navigation
@@ -19,7 +20,8 @@
             :font-size 16,
             :border-bottom (str "1px solid " (hsl 0 0 0 0.1)),
             :font-family ui/font-fancy,
-            :background-color (:theme config/site)})}
+            :background-color (:theme config/site),
+            :flex-shrink 0})}
   (div
    {:on-click (action-> :router/change {:name :home}), :style (merge ui/row-center)}
    (<> (:title config/site) {:cursor :pointer})
@@ -29,7 +31,7 @@
     comp-prompt
     states
     {:multiline? true, :trigger (div {:style {:font-size 20}} (comp-icon :ios-plus-empty))}
-    (fn [result d! m!] (d! :snippet/create result))))
+    (fn [result d! m!] (d! :snippet/create (read-string result)))))
   (div
    {:style {:cursor "pointer"}, :on-click (action-> :router/change {:name :profile})}
    (<> (if logged-in? "Me" "Guest"))
