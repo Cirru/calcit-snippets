@@ -18,5 +18,6 @@
             :router/change router/change
             :snippet/create snippet/create
             :snippet/remove-one snippet/remove-one
+            :snippet/update-title snippet/update-title
             (do (println "Unknown op:" op) identity))]
     (f db op-data sid op-id op-time)))

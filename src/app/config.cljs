@@ -11,7 +11,7 @@
 (def site
   {:storage-key "calcit-snippets",
    :port 5021,
-   :title "Calcit Snippets",
+   :title "Snippets",
    :icon "http://cdn.tiye.me/logo/cirru.png",
    :dev-ui "http://localhost:8100/main.css",
    :release-ui "http://cdn.tiye.me/favored-fonts/main.css",
