@@ -30,7 +30,6 @@
  comp-navigation
  (states logged-in? count-members)
  (let [state (or (:data states) initial-state)]
-   (println "state:" state)
    (div
     {:style style-container}
     (div
@@ -39,10 +38,10 @@
       {:on-click (action-> :router/change {:name :home}), :style {:cursor :pointer}}
       (<> (:title config/site)))
      (=< 16 nil)
-     (div
-      {:style {:font-size 20, :cursor :pointer},
-       :on-click (fn [e d! m!] (m! (assoc state :show? true)))}
-      (comp-icon :ios-plus-empty)))
+     (button
+      {:style ui/button,
+       :on-click (fn [e d! m!] (m! (assoc state :show? true))),
+       :inner-text "Add"}))
     (div
      {:style {:cursor "pointer"}, :on-click (action-> :router/change {:name :profile})}
      (<> (if logged-in? "Me" "Guest"))

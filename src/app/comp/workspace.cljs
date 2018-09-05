@@ -14,7 +14,8 @@
             [cljs.reader :refer [read-string]]
             [clojure.string :as string]
             [respo-alerts.comp.alerts :refer [comp-confirm comp-prompt]]
-            [respo-ui.comp.icon :refer [comp-icon]]))
+            [respo-ui.comp.icon :refer [comp-icon]]
+            [app.comp.copied :refer [comp-copied]]))
 
 (defcomp
  comp-snippet
@@ -37,11 +38,13 @@
     :name
     comp-prompt
     states
-    {:trigger (comp-icon :edit)}
+    {:trigger (comp-icon :edit), :text "New name:", :initial (:name snippet)}
     (fn [result d! m!] (d! :snippet/update-title {:id (:id snippet), :name result}))))
-  (div
-   {:style (merge ui/flex {:overflow :auto, :cursor :pointer}),
-    :on-click (fn [e d! m!] (copy! (pr-str (:tree snippet))))}
+  (cursor->
+   :copy
+   comp-copied
+   states
+   (pr-str (:tree snippet))
    (comp-expr (:tree snippet) false))
   (div
    {:style ui/row-parted}
@@ -49,10 +52,21 @@
    (div
     {}
     (cursor->
+     :edit
+     comp-prompt
+     states
+     {:trigger (button {:style ui/button, :inner-text "Edit"}),
+      :initial (pr-str (:tree snippet)),
+      :multiline? true,
+      :text "New tree:"}
+     (fn [result d! m!]
+       (d! :snippet/update-tree {:id (:id snippet), :tree (read-string result)})))
+    (=< 8 nil)
+    (cursor->
      :remove
      comp-confirm
      states
-     {:trigger (button {:style ui/button, :inner-text "Remove"})}
+     {:trigger (button {:style ui/button, :inner-text "Remove"}), :text "Sure to remove?"}
      (fn [e d! m!] (d! :snippet/remove-one (:id snippet))))))))
 
 (defcomp

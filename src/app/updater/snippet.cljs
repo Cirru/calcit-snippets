@@ -9,3 +9,6 @@
 
 (defn update-title [db op-data sid op-id op-time]
   (assoc-in db [:snippets (:id op-data) :name] (:name op-data)))
+
+(defn update-tree [db op-data sid op-id op-time]
+  (assoc-in db [:snippets (:id op-data) :tree] (:tree op-data)))
