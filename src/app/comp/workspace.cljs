@@ -58,6 +58,7 @@
      {:trigger (button {:style ui/button, :inner-text "Edit"}),
       :initial (pr-str (:tree snippet)),
       :multiline? true,
+      :input-style {:font-family ui/font-code},
       :text "New tree:"}
      (fn [result d! m!]
        (d! :snippet/update-tree {:id (:id snippet), :tree (read-string result)})))
