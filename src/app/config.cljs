@@ -1,16 +1,21 @@
 
-(ns app.config (:require [app.util :refer [get-env!]]))
+(ns app.config (:require [cumulo-util.core :refer [get-env!]]))
 
-(def bundle-builds #{"release" "local-bundle"})
+(def cdn?
+  (cond
+    (exists? js/window) false
+    (exists? js/process) (= "true" js/process.env.cdn)
+    :else false))
 
 (def dev?
-  (if (exists? js/window)
-    (do ^boolean js/goog.DEBUG)
-    (not (contains? bundle-builds (get-env! "mode")))))
+  (let [debug? (do ^boolean js/goog.DEBUG)]
+    (cond
+      (exists? js/window) debug?
+      (exists? js/process) (not= "true" js/process.env.release)
+      :else true)))
 
 (def site
-  {:storage-key "calcit-snippets",
-   :port 11010,
+  {:port 11010,
    :title "Snippets",
    :icon "http://cdn.tiye.me/logo/cirru.png",
    :dev-ui "http://localhost:8100/main.css",
@@ -19,4 +24,5 @@
    :cdn-folder "tiye.me:cdn/calcit-snippets",
    :upload-folder "tiye.me:repo/Cirru/calcit-snippets/",
    :server-folder "tiye.me:servers/calcit-snippets",
-   :theme "#eeeeff"})
+   :theme "#eeeeff",
+   :storage-file "storage.edn"})
