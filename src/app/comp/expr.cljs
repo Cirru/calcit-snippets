@@ -7,7 +7,9 @@
             [app.schema :as schema]
             [app.style :as style]
             [app.config :as config]
-            [respo.util.list :refer [map-val]]))
+            [respo.util.list :refer [map-val]]
+            [hsl.core :refer [hsl]])
+  (:require-macros [clojure.core.strint :refer [<<]]))
 
 (defcomp
  comp-leaf
@@ -20,7 +22,11 @@
  (list->
   {:style (let [simple? (every? string? expr)]
      (merge
-      {:border "1px solid #ccc", :border-width "0 0 0 1px", :padding-left 8, :margin-left 8}
+      {:border-color (hsl 0 0 30),
+       :border-width "0 0 0 1px",
+       :border-style :solid,
+       :padding-left 8,
+       :margin-left 8}
       (when (or tail? simple?) {:display :inline-block, :border-width "0 0 1px 0"})
       (when (and tail? (not simple?)) {:border-width "0 0 0 1px"})))}
   (->> expr

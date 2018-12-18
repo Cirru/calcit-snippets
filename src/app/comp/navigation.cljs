@@ -11,7 +11,8 @@
             [respo-ui.comp.icon :refer [comp-icon]]
             [cljs.reader :refer [read-string]]
             [inflow-popup.comp.dialog :refer [comp-dialog]]
-            [clojure.string :as string]))
+            [clojure.string :as string]
+            [app.style :as style]))
 
 (def initial-state {:show? false, :title "", :draft ""})
 
@@ -21,7 +22,7 @@
    {:height 48,
     :padding "0 16px",
     :font-size 16,
-    :border-bottom (str "1px solid " (hsl 0 0 0 0.1)),
+    :border-bottom (str "1px solid " (hsl 0 0 100 0.3)),
     :font-family ui/font-fancy,
     :background-color (:theme config/site),
     :flex-shrink 0}))
@@ -39,7 +40,7 @@
       (<> (:title config/site)))
      (=< 16 nil)
      (button
-      {:style ui/button,
+      {:style style/button,
        :on-click (fn [e d! m!] (m! (assoc state :show? true))),
        :inner-text "Add"}))
     (div

@@ -60,7 +60,11 @@
    (if (nil? store)
      (comp-offline)
      (div
-      {:style (merge ui/global ui/fullscreen ui/column)}
+      {:style (merge
+               ui/global
+               ui/fullscreen
+               ui/column
+               {:background-color (:theme config/site), :color :white})}
       (cursor-> :nav comp-navigation states (:logged-in? store) (:count store))
       (if (:logged-in? store)
         (case (:name router)

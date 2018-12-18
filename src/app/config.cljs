@@ -9,10 +9,12 @@
 
 (def dev?
   (let [debug? (do ^boolean js/goog.DEBUG)]
-    (cond
-      (exists? js/window) debug?
-      (exists? js/process) (not= "true" js/process.env.release)
-      :else true)))
+    (if debug?
+      (cond
+        (exists? js/window) true
+        (exists? js/process) (not= "true" js/process.env.release)
+        :else true)
+      false)))
 
 (def site
   {:port 11010,
@@ -24,6 +26,6 @@
    :cdn-folder "tiye.me:cdn/calcit-snippets",
    :upload-folder "tiye.me:repo/Cirru/calcit-snippets/",
    :server-folder "tiye.me:servers/calcit-snippets",
-   :theme "#eeeeff",
+   :theme "black",
    :storage-key "cirru-snippets",
    :storage-file "storage.edn"})

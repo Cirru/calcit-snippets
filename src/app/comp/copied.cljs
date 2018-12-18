@@ -22,10 +22,10 @@
     (when (:show? state)
       (div
        {:style {:position :absolute,
-                :top 0,
-                :left 0,
-                :background-color :black,
-                :color :white,
+                :top 16,
+                :left 16,
+                :background-color :white,
+                :color :black,
                 :padding "0 8px",
                 :font-family ui/font-fancy}}
        (<> "Copied"))))))

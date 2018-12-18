@@ -5,7 +5,8 @@
             [respo-ui.core :as ui]
             [respo.core :refer [defcomp list-> <> span div button]]
             [respo.comp.space :refer [=<]]
-            [app.config :as config]))
+            [app.config :as config]
+            [app.style :as style]))
 
 (defcomp
  comp-profile
@@ -36,7 +37,7 @@
   (div
    {}
    (button
-    {:style (merge ui/button {:color :red, :border-color :red}),
+    {:style (merge style/button {:color :red, :border-color :red}),
      :on-click (fn [e dispatch! mutate!]
        (dispatch! :user/log-out nil)
        (.removeItem js/localStorage (:storage-key config/site)))}
