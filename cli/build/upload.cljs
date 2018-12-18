@@ -1,11 +1,11 @@
 
 (ns build.upload
-  (:require ["child_process" :as child-process]
+  (:require ["child_process" :as cp]
             [app.config :as config]))
 
 (defn sh! [command]
   (println command)
-  (println (.toString (child-process/execSync command))))
+  (println (.toString (cp/execSync command))))
 
 (defn -main []
   (sh! (str "rsync -avr --progress dist/* " (:cdn-folder config/site)))

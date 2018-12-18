@@ -1,5 +1,5 @@
 
-(ns app.config (:require [cumulo-util.core :refer [get-env!]]))
+(ns app.config )
 
 (def cdn?
   (cond
@@ -25,4 +25,5 @@
    :upload-folder "tiye.me:repo/Cirru/calcit-snippets/",
    :server-folder "tiye.me:servers/calcit-snippets",
    :theme "#eeeeff",
+   :storage-key "cirru-snippets",
    :storage-file "storage.edn"})
