@@ -34,25 +34,17 @@
             :height 320,
             :vertical-align :top})}
   (div
-   {:style {:margin-bottom 8, :font-family ui/font-fancy}}
-   (<> (if (string/blank? (:name snippet)) "Untitled" (:name snippet)))
-   (=< 8 nil)
-   (cursor->
-    :name
-    comp-prompt
-    states
-    {:trigger (comp-icon :edit), :text "New name:", :initial (:name snippet)}
-    (fn [result d! m!] (d! :snippet/update-title {:id (:id snippet), :name result}))))
-  (=< 0 16)
-  (cursor->
-   :copy
-   comp-copied
-   states
-   (pr-str (:tree snippet))
-   (comp-expr (:tree snippet) false))
-  (div
    {:style ui/row-parted}
-   (span {})
+   (div
+    {:style {:margin-bottom 8, :font-family ui/font-fancy}}
+    (<> (if (string/blank? (:name snippet)) "Untitled" (:name snippet)))
+    (=< 8 nil)
+    (cursor->
+     :name
+     comp-prompt
+     states
+     {:trigger (comp-icon :edit), :text "New name:", :initial (:name snippet)}
+     (fn [result d! m!] (d! :snippet/update-title {:id (:id snippet), :name result}))))
    (div
     {}
     (cursor->
@@ -72,7 +64,14 @@
       :input-style {:font-family ui/font-code},
       :text "New tree:"}
      (fn [result d! m!]
-       (d! :snippet/update-tree {:id (:id snippet), :tree (read-string result)})))))))
+       (d! :snippet/update-tree {:id (:id snippet), :tree (read-string result)})))))
+  (=< 0 16)
+  (cursor->
+   :copy
+   comp-copied
+   states
+   (pr-str (:tree snippet))
+   (comp-expr (:tree snippet) false))))
 
 (defcomp
  comp-workspace
