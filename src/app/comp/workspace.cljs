@@ -10,14 +10,14 @@
             [respo.util.list :refer [map-val]]
             ["copy-text-to-clipboard" :as copy!]
             [respo-alerts.comp.alerts :refer [comp-alert]]
-            [app.comp.expr :refer [comp-expr]]
             [cljs.reader :refer [read-string]]
             [clojure.string :as string]
             [respo-alerts.comp.alerts :refer [comp-confirm comp-prompt]]
             [respo-ui.comp.icon :refer [comp-icon]]
             [app.comp.copied :refer [comp-copied]]
             [hsl.core :refer [hsl]]
-            [app.style :as style])
+            [app.style :as style]
+            [calcit-theme.comp.expr :refer [render-expr]])
   (:require-macros [clojure.core.strint :refer [<<]]))
 
 (defcomp
@@ -66,12 +66,7 @@
      (fn [result d! m!]
        (d! :snippet/update-tree {:id (:id snippet), :tree (read-string result)})))))
   (=< 0 16)
-  (cursor->
-   :copy
-   comp-copied
-   states
-   (pr-str (:tree snippet))
-   (comp-expr (:tree snippet) false))))
+  (cursor-> :copy comp-copied states (pr-str (:tree snippet)) (render-expr (:tree snippet)))))
 
 (defcomp
  comp-workspace

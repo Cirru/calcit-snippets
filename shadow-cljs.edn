@@ -13,6 +13,7 @@
                 [respo/inflow-popup     "0.2.6"]
                 [respo/feather          "0.1.1"]
                 [cirru/bisection-key    "0.1.5"]
+                [cirru/calcit-theme     "0.1.0"]
                 [org.clojure/core.incubator "0.1.4"]]
  :open-file-command ["subl" ["%s:%s:%s" :file :line :column]]
  :builds {:client {:output-dir "target/"
