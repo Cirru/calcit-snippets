@@ -14,6 +14,8 @@
             [clojure.string :as string]
             [app.style :as style]))
 
+(defn cirru-expr? [x] (if (vector? x) (every? cirru-expr? x) (string? x)))
+
 (def initial-state {:show? false, :title "", :draft ""})
 
 (def style-container
@@ -72,7 +74,14 @@
           {:style ui/button,
            :inner-text "Create",
            :on-click (fn [e d! m!]
-             (when (and (not (string/blank? (:title state)))
-                        (not (string/blank? (:draft state))))
-               (d! :snippet/create {:name (:title state), :tree (read-string (:draft state))})
-               (m! initial-state)))}))))))))
+             (let [data (read-string (:draft state))]
+               (if (cirru-expr? data)
+                 (when (and (not (string/blank? (:title state)))
+                            (not (string/blank? (:draft state))))
+                   (println "code" (pr-str))
+                   (d!
+                    :snippet/create
+                    {:name (:title state), :tree (read-string (:draft state))})
+                   (m! initial-state))
+                 (js/alert
+                  "Please submit Cirru expressions! For example `[\"def\" \"a\" [\"x\" \"y\"]]`"))))}))))))))

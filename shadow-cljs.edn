@@ -10,7 +10,7 @@
                 [respo/ui               "0.3.10"]
                 [respo/alerts           "0.3.10"]
                 [respo/message          "0.3.4"]
-                [respo/inflow-popup     "0.2.6"]
+                [respo/inflow-popup     "0.2.7"]
                 [respo/feather          "0.1.1"]
                 [cirru/bisection-key    "0.1.5"]
                 [cirru/calcit-theme     "0.1.0"]
