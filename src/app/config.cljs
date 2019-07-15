@@ -23,9 +23,6 @@
    :dev-ui "http://localhost:8100/main.css",
    :release-ui "http://cdn.tiye.me/favored-fonts/main.css",
    :cdn-url "http://cdn.tiye.me/calcit-snippets/",
-   :cdn-folder "tiye.me:cdn/calcit-snippets",
-   :upload-folder "tiye.me:repo/Cirru/calcit-snippets/",
-   :server-folder "tiye.me:servers/calcit-snippets",
    :theme "black",
    :storage-key "cirru-snippets",
    :storage-file "storage.edn"})
