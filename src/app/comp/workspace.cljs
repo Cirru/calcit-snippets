@@ -13,7 +13,7 @@
             [cljs.reader :refer [read-string]]
             [clojure.string :as string]
             [respo-alerts.comp.alerts :refer [comp-confirm comp-prompt]]
-            [respo-ui.comp.icon :refer [comp-icon]]
+            [feather.core :refer [comp-i]]
             [app.comp.copied :refer [comp-copied]]
             [hsl.core :refer [hsl]]
             [app.style :as style]
@@ -43,7 +43,9 @@
      :name
      comp-prompt
      states
-     {:trigger (comp-icon :edit), :text "New name:", :initial (:name snippet)}
+     {:trigger (comp-i :edit-2 16 (hsl 200 80 80)),
+      :text "New name:",
+      :initial (:name snippet)}
      (fn [result d! m!] (d! :snippet/update-title {:id (:id snippet), :name result}))))
    (div
     {}

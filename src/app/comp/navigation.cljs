@@ -8,7 +8,6 @@
              [defcomp <> cursor-> action-> span div input textarea button]]
             [app.config :as config]
             [respo-alerts.comp.alerts :refer [comp-prompt]]
-            [respo-ui.comp.icon :refer [comp-icon]]
             [cljs.reader :refer [read-string]]
             [inflow-popup.comp.dialog :refer [comp-dialog]]
             [clojure.string :as string]
