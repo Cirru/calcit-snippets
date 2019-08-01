@@ -53,10 +53,7 @@
 (defcomp
  comp-container
  (states store)
- (let [state (:data states)
-       session (:session store)
-       router (:router store)
-       router-data (:data router)]
+ (let [session (:session store), router (:router store), router-data (:data router)]
    (if (nil? store)
      (comp-offline)
      (div
@@ -68,7 +65,7 @@
       (cursor-> :nav comp-navigation states (:logged-in? store) (:count store))
       (if (:logged-in? store)
         (case (:name router)
-          :home (comp-workspace states (:data router))
+          :home (cursor-> :workspace comp-workspace states (:data router))
           :profile (comp-profile (:user store) (:data router))
           (<> router))
         (comp-login states))
