@@ -17,7 +17,8 @@
             [app.comp.copied :refer [comp-copied]]
             [hsl.core :refer [hsl]]
             [app.style :as style]
-            [calcit-theme.comp.expr :refer [render-expr]])
+            [calcit-theme.comp.expr :refer [render-expr]]
+            [medley.core :refer [filter-vals]])
   (:require-macros [clojure.core.strint :refer [<<]]))
 
 (defcomp
@@ -29,9 +30,9 @@
            {:border (<< "1px solid ~(hsl 0 0 30)"),
             :padding 8,
             :margin 8,
-            :width 480,
+            :width 400,
             :display :inline-flex,
-            :height 320,
+            :height 240,
             :vertical-align :top})}
   (div
    {:style ui/row-parted}
@@ -73,9 +74,24 @@
 (defcomp
  comp-workspace
  (states snippets)
- (div
-  {:style {:padding 16, :overflow :auto}}
-  (list->
-   {}
-   (->> snippets
-        (map-val (fn [snippet] (cursor-> (:id snippet) comp-snippet states snippet)))))))
+ (let [state (or (:data states) {:query ""})]
+   (div
+    {:style {:padding 16, :overflow :auto}}
+    (div
+     {:style (merge ui/row-parted {:padding "4px 8px"})}
+     (span nil)
+     (input
+      {:style (merge
+               ui/input
+               {:background-color (hsl 0 0 10 0),
+                :color :white,
+                :font-family ui/font-normal,
+                :border-color (hsl 0 0 100 0.4)}),
+       :placeholder "filter..",
+       :value (:query state),
+       :on-input (fn [e d! m!] (m! (assoc state :query (:value e))))}))
+    (list->
+     {}
+     (->> snippets
+          (filter-vals (fn [snippet] (string/includes? (:name snippet) (:query state))))
+          (map-val (fn [snippet] (cursor-> (:id snippet) comp-snippet states snippet))))))))
