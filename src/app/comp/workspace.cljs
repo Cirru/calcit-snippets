@@ -18,8 +18,45 @@
             [hsl.core :refer [hsl]]
             [app.style :as style]
             [calcit-theme.comp.expr :refer [render-expr]]
-            [medley.core :refer [filter-vals]])
+            [medley.core :refer [filter-vals]]
+            [feather.core :refer [comp-icon]])
   (:require-macros [clojure.core.strint :refer [<<]]))
+
+(defcomp
+ comp-preview
+ (states snippet)
+ (let [state (or (:data states) {:show? false})
+       title (if (string/blank? (:name snippet)) "Untitled" (:name snippet))]
+   (span
+    {}
+    (span
+     {:inner-text title,
+      :style {:cursor :pointer},
+      :on-click (fn [e d! m!] (m! (update state :show? not)))})
+    (if (:show? state)
+      (div
+       {:style (merge
+                ui/column
+                {:position :fixed,
+                 :width "100%",
+                 :height "100%",
+                 :left 0,
+                 :top 0,
+                 :background-color :black,
+                 :z-index 100})}
+       (div
+        {:style (merge
+                 ui/row-middle
+                 {:padding 8, :border-bottom (str "1px solid " (hsl 0 0 96 0.2))})}
+        (<> title)
+        (=< 16 nil)
+        (comp-icon
+         :x
+         {:font-size 16, :color (hsl 0 0 100), :cursor :pointer}
+         (fn [e d! m!] (m! (assoc state :show? false)))))
+       (div
+        {:style (merge ui/expand {:padding "16px 8px 200px 8px"})}
+        (render-expr (:tree snippet))))))))
 
 (defcomp
  comp-snippet
@@ -38,7 +75,7 @@
    {:style ui/row-parted}
    (div
     {:style {:margin-bottom 8, :font-family ui/font-fancy}}
-    (<> (if (string/blank? (:name snippet)) "Untitled" (:name snippet)))
+    (cursor-> :preview comp-preview states snippet)
     (=< 8 nil)
     (cursor->
      :name
